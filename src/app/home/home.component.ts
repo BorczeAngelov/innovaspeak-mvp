@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberfulDataService } from '../services/memberful-data.service';
 import { CurrentUserInfoService } from '../services/current-user-info.service';
 
 @Component({
@@ -12,13 +11,10 @@ import { CurrentUserInfoService } from '../services/current-user-info.service';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private memberfulDataService: MemberfulDataService,
     private currentUserInfoService: CurrentUserInfoService) {
   }
 
   ngOnInit(): void {
-    this.memberfulDataService.getAndLogCurrentMemberData();
     this.currentUserInfoService.getAndLogCurrentUserInfo();
   }
-
 }
