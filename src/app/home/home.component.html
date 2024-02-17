@@ -1,2 +1,29 @@
 <h1>Welcome Home!</h1>
 <p>Congratulations on successfully logging in. Your journey has just begun!</p>
+------
+<div class="login-container">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" [(ngModel)]="username" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="password" class="form-control">
+    </div>
+    <button (click)="login()" class="btn btn-primary">Login</button>
+
+    <div class="form-group">
+        <label for="callerNumber">Caller Number:</label>
+        <input type="text" id="callerNumber" [(ngModel)]="callerNumber" class="form-control">
+    </div>
+    <div class="action-buttons">
+        <button (click)="call()" class="btn btn-success">Call</button>
+        <button (click)="hangUp()" class="btn btn-danger">Hang Up</button>
+    </div>
+</div>
+
+<div class="messages-display">
+    <ul class="message-list">
+        <li *ngFor="let message of messages" class="message-item">{{ message }}</li>
+    </ul>
+</div>
