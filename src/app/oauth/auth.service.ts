@@ -1,22 +1,12 @@
 import { Injectable } from '@angular/core';
 import { OAuthService, AuthConfig, OAuthErrorEvent } from 'angular-oauth2-oidc';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private accessTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-
   constructor(private oauthService: OAuthService, private authConfig: AuthConfig) {
     this.oauthService.configure(authConfig);
-
-    // Maybe this will be needed on refresh...?
-    // this.oauthService.tryLogin()
-    //   .then(this.handleNewToken)
-    //   .catch(err => { console.error('AuthService: Error during login process.', err); });
-
 
     this.oauthService.events.subscribe(event => {
       if (event instanceof OAuthErrorEvent) {
@@ -35,15 +25,8 @@ export class AuthService {
     this.oauthService.logOut();
   }
 
-  public get accessToken(): Observable<string | null> {
-    return this.accessTokenSubject.asObservable();
-  }
-
-  private handleNewToken(): void {
-    if (this.oauthService.hasValidAccessToken()) {
-      const accessToken = this.oauthService.getAccessToken();
-      this.accessTokenSubject.next(accessToken);
-    }
+  public getAccessToken(): string | null {
+    return this.oauthService.getAccessToken();
   }
 
   // Add other methods as needed, leveraging OAuthService for tasks such as token refresh
