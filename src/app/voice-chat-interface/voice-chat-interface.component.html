@@ -1,0 +1,25 @@
+<div class="voice-chat-container">
+  <mat-card class="call-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Call with Jane Doe</mat-card-title>
+      <mat-card-subtitle>Duration: 00:02:34</mat-card-subtitle>
+    </mat-card-header>
+
+    <!-- <img mat-card-image src="assets/other-person.jpg" alt="Profile photo of Jane Doe"> -->
+    <img mat-card-image src="favicon.ico" alt="Profile photo of Jane Doe" height="500px">
+
+    <mat-card-content class="content-with-button">
+        <div class="chat-messages">
+          <div class="message" *ngFor="let message of messages">
+            <div class="message-author">{{message.author}}:</div>
+            <div class="message-text">{{message.text}}</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button mat-raised-button color="primary" (mousedown)="startTalking()" (mouseup)="stopTalking()">Push to Talk</button>
+        </div>
+      </mat-card-content>
+  </mat-card>
+</div>

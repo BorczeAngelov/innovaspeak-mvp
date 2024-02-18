@@ -1,0 +1,26 @@
+.center-content-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically in viewport */
+  }
+
+.login-container {
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff; /* White background */
+  }
+  
+  .login-title {
+    margin-bottom: 20px; /* Add spacing below title */
+  }
+  
+  .login-message {
+    margin-bottom: 30px; /* Add spacing below message */
+  }
+  
+  .login-button {
+    width: 100%; /* Make button span full width */
+  }

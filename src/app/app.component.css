@@ -1,0 +1,17 @@
+.sidenav-container {
+    height: calc(100vh - 40px); /* Subtract footer height */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  /* Assuming you have a specific class for the footer in your main layout */
+  footer {
+    height: 10px; /* Adjust based on your footer's actual height */
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+  }
+  

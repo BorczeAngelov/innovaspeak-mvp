@@ -1,0 +1,45 @@
+.voice-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100hv;
+  }  
+
+  .call-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure the card expands to fill the container */
+  }
+  
+  .content-with-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This ensures that the chat messages and actions are pushed to the top and bottom respectively */
+    height: 100%;
+  }
+  
+  .chat-messages {
+    overflow-y: auto;
+    margin-top: 20px;
+    flex-grow: 1;
+  }
+  
+  .actions {    
+    flex-grow: 1;
+  }
+  
+  .message {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .message-author {
+    font-weight: bold;
+    color: #3f51b5;
+  }
+  
+  .message-text {
+    margin-left: 10px;
+  }
+  
+  

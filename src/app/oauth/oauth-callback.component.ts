@@ -15,7 +15,7 @@ export class OAuthCallbackComponent implements OnInit {
             if (this.oauthService.hasValidAccessToken()) {
                 console.log('OAuthCallbackComponent: Login successful, valid access token obtained.');
                 // Redirect to a different page if the user is logged in
-                this.router.navigateByUrl('/home'); // Adjust this to your application's needs
+                this.router.navigateByUrl(''); // Adjust this to your application's needs
             } else {
                 console.log('OAuthCallbackComponent: Login process completed, but no valid access token was obtained.');
                 // Handle login failure or redirect back to login page
