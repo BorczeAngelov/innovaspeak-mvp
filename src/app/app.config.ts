@@ -5,16 +5,16 @@ import { AuthConfig, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { routes } from './app.routes';
 import { BASE_URL, PublicAuthConfig } from './oauth/PublicAuthConfig';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+    provideAnimationsAsync(),
     importProvidersFrom(
-      BrowserModule,
-      FormsModule,
       HttpClientModule,
+      BrowserAnimationsModule,
     ),
     OAuthModule.forRoot({
       resourceServer: {
@@ -24,6 +24,6 @@ export const appConfig: ApplicationConfig = {
     }).providers!,
 
     { provide: AuthConfig, useValue: PublicAuthConfig }, // dependency injections
-    { provide: OAuthStorage, useValue: localStorage },
+    { provide: OAuthStorage, useValue: localStorage }, 
   ]
 };
