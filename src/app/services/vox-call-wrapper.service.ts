@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { INNOVASPEAK_VOX_PROXY_PROJECT_DOMAIN } from './PublicConfigValues';
 
 declare var VoxImplant: any; // will be loaded from index.html with line <script src="https://unpkg.com/voximplant-websdk"></script>
 
@@ -23,36 +24,8 @@ export class VoxCallWrapperService {
       return;
     }
 
-    await this.connectAndLogin(username, password);
-  }
-
-  private async isClientConnected(): Promise<boolean> {
-    const clientState = this.voxSdk.getClientState();
-    return clientState === "CONNECTED" || clientState === "LOGGING_IN";
-  }
-
-  private async connectAndLogin(username: string, password: string): Promise<void> {
-    try {
-      await this.voxSdk.init({ micRequired: false });
-      await this.voxSdk.connect();
-      await this.login(username, password);
-    } catch (error) {
-      this.handleConnectionError(error);
-    }
-  }
-  
-  private async login(username: string, password: string): Promise<void> {
-    try {
-      const info = await this.voxSdk.login(username, password);
-      console.log('Login successful', info);
-    } catch (error) {
-      console.error('Login error', error);
-    }
-  }
-
-  private handleConnectionError(error: any): void {
-    alert('Cannot connect to the VoxImplant cloud');
-    console.warn('Cannot connect', error);
+    var fullUserName = username + INNOVASPEAK_VOX_PROXY_PROJECT_DOMAIN;
+    await this.connectAndLogin(fullUserName, password);
   }
 
   public async callAsync(number: string): Promise<void> {
@@ -64,12 +37,6 @@ export class VoxCallWrapperService {
     await this.initiateCall(number);
   }
 
-  private async initiateCall(number: string): Promise<void> {
-    await this.voxSdk.setOperatorACDStatus(VoxImplant.OperatorACDStatuses.InService);
-    this.currentCall = this.voxSdk.call(number);
-    this.bindCallEvents();
-  }
-
   public async hangUpAsync(): Promise<void> {
     if (!this.currentCall) {
       console.warn("No current call to hang up.");
@@ -77,6 +44,41 @@ export class VoxCallWrapperService {
     }
 
     await this.terminateCall();
+  }
+
+  private async isClientConnected(): Promise<boolean> {
+    const clientState = this.voxSdk.getClientState();
+    return clientState === "CONNECTED" || clientState === "LOGGING_IN";
+  }
+
+  private async connectAndLogin(fullUserName: string, password: string): Promise<void> {
+    try {
+      await this.voxSdk.init({ micRequired: false });
+      await this.voxSdk.connect();
+      await this.login(fullUserName, password);
+    } catch (error) {
+      this.handleConnectionError(error);
+    }
+  }
+  
+  private async login(fullUserName: string, password: string): Promise<void> {
+    try {
+      const info = await this.voxSdk.login(fullUserName, password);
+      console.log('Login successful', info);
+    } catch (error) {
+      console.error('Login error', error);
+    }
+  }
+
+  private handleConnectionError(error: any): void {
+    alert('Cannot connect to the VoxImplant cloud');
+    console.warn('Cannot connect', error);
+  }
+
+  private async initiateCall(number: string): Promise<void> {
+    await this.voxSdk.setOperatorACDStatus(VoxImplant.OperatorACDStatuses.InService);
+    this.currentCall = this.voxSdk.call(number);
+    this.bindCallEvents();
   }
 
   private async terminateCall(): Promise<void> {

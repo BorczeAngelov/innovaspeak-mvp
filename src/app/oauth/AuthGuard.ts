@@ -11,6 +11,8 @@ class AuthGuardService {
   constructor(private oauthService: OAuthService, private router: Router) { }
 
   async canActivate(): Promise<boolean> {
+    // return true // even if this fails, the rest calls wont work.
+    // we use values of CurrentUserSubscription instead
     return await this.checkLogin();
   }
 
