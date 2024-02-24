@@ -10,7 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav';
-
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   imports: [MatSidenavContainer],
@@ -26,6 +28,9 @@ import { MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav
     MatToolbarModule,
     MatSidenavModule,
     MatSidenavContainer,
+    MatGridListModule,
+    MatProgressBarModule,
+    MatChipsModule,
   ],
 })
 export class SharedImportedMatModule { }

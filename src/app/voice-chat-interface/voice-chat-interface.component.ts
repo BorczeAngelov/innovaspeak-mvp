@@ -15,6 +15,7 @@ import { CurrentUserInfo } from '../services/CurrentUserInfo';
 export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
 
   messages: { author: string, text: string }[] = [];
+  callStatus = 'speaking';
 
   constructor(
     private currentUserInfoService: CurrentUserInfoService,
