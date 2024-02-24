@@ -5,17 +5,18 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 import { AuthGuardService } from './oauth/AuthGuard';
+import { VoiceChatInterfaceComponent } from './voice-chat-interface/voice-chat-interface.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, BrowserHomeComponent, CommonModule],
+  imports: [RouterOutlet, BrowserHomeComponent, CommonModule, VoiceChatInterfaceComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   title = 'InnovaSpeak';  
-  
+
   isDesktop: boolean = false;
   isAuthenticated: boolean = false;
 
