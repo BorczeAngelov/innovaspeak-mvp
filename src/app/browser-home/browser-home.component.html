@@ -1,0 +1,212 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <mat-icon>hearing</mat-icon>
+      <mat-icon>memory</mat-icon>
+      <mat-icon>mic</mat-icon>
+      <span>InnovaSpeak</span>
+  
+      <span class="example-spacer"></span>
+  
+      <button mat-button>
+        <mat-icon>info</mat-icon>
+        About
+      </button>
+  
+      <button mat-button>
+        <mat-icon>rss_feed</mat-icon>
+        Blog
+      </button>
+  
+      <button mat-button>
+        <mat-icon>help_outline</mat-icon>
+        FAQ
+      </button>
+  
+      <button mat-button>
+        <mat-icon>verified_user</mat-icon>
+        Terms and Privacy Policy
+      </button>
+  
+      <button mat-button>
+        <mat-icon>email</mat-icon>
+        Contact
+      </button>
+  
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <mat-grid-list cols="20" rowHeight="1:1">
+  
+    <!-- #1 AI Avatars [Component] -->
+    <mat-grid-tile colspan="4" rowspan="7">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>AI Avatars [Component]</mat-card-title>
+        </mat-card-header>
+  
+        <mat-card-content class="component-card-content">
+          <mat-selection-list style="padding: 0; margin: 0;">
+            @for (avatar of avatars; track avatar) {
+            <mat-list-item>
+  
+              <mat-card class="example-card">
+                <mat-card-header class="example-card-header">
+                  <div mat-card-avatar class="example-header-image"></div>
+                  <mat-card-title>{{avatar.name}}</mat-card-title>
+                  <mat-card-subtitle>{{avatar.description}}</mat-card-subtitle>
+                </mat-card-header>
+              </mat-card>
+            </mat-list-item>
+            }
+          </mat-selection-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  
+  
+    <!-- #2 Selected Avatar Info [Component] -->
+    <mat-grid-tile colspan="6" rowspan="9">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>Selected Avatar Info [Component]</mat-card-title>
+        </mat-card-header>
+  
+        <mat-card-content class="component-card-content">
+  
+  
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>Shiba Inu</mat-card-title>
+              <mat-card-subtitle>The Dodgecoin Guru</mat-card-subtitle>
+            </mat-card-header>
+  
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+              alt="Photo of a Shiba Inu">
+  
+            <mat-card-content>
+              <p>{{ longText }}</p>
+              <mat-divider></mat-divider>
+  
+              <div *ngFor="let bar of bars">
+                <span>{{ bar.label }}</span>
+                <mat-progress-bar mode="determinate" [value]="bar.value"></mat-progress-bar>
+              </div>
+              
+              <mat-divider></mat-divider>
+  
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+              <span class="example-spacer"></span>
+              <button mat-raised-button color="accent">SEND FEEDBACK</button>
+            </mat-card-actions>
+          </mat-card>
+  
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  
+    <!-- #3 Call With Avatar [Component] -->
+    <mat-grid-tile colspan="7" rowspan="9">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>Call With Avatar [Component]</mat-card-title>
+        </mat-card-header>
+  
+        <mat-card-content class="component-card-content">
+          <app-voice-chat-interface>
+          </app-voice-chat-interface>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  
+  
+    <!-- #4 Call History [Component] -->
+    <mat-grid-tile colspan="3" rowspan="5">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>Call History [Component]</mat-card-title>
+        </mat-card-header>
+  
+        <mat-card-content class="component-card-content">
+          <mat-selection-list style="padding: 0; margin: 0;">
+            @for (avatar of avatars; track avatar) {
+            <mat-list-item>
+  
+              <mat-card class="example-card">
+                <mat-card-header class="example-card-header">
+                  <div mat-card-avatar class="example-header-image"></div>
+                  <mat-card-title>{{avatar.name}}</mat-card-title>
+                  <mat-card-subtitle>{{avatar.description}}</mat-card-subtitle>
+                </mat-card-header>
+              </mat-card>
+            </mat-list-item>
+            }
+          </mat-selection-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  
+    <!-- #5 Gamification [Component] -->
+    <mat-grid-tile colspan="3" rowspan="4">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>Gamification [Component]</mat-card-title>
+        </mat-card-header>
+  
+        <mat-card-content class="component-card-content" style="padding: 15px;">
+          <div>
+            <h3>Points: 450/500</h3>
+            <mat-progress-bar mode="determinate" value="90" color="primary"></mat-progress-bar>
+          </div>
+  
+          <!-- Badges Earned -->
+          <h3>Badges Earned</h3>
+          <div>
+            <mat-chip-listbox>
+              <mat-chip color="primary" selected><mat-icon>star</mat-icon> Star Achiever</mat-chip>
+              <mat-chip color="accent" selected><mat-icon>emoji_events</mat-icon> Top Contributor</mat-chip>
+              <mat-chip color="warn" selected><mat-icon>lock_clock</mat-icon> Time Keeper</mat-chip>
+            </mat-chip-listbox>
+          </div>
+  
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  
+  
+  
+    <!-- #6 User Info [Component] -->
+    <mat-grid-tile colspan="4" rowspan="2">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-card-title>User Info [Component]</mat-card-title>
+        </mat-card-header>
+  
+        <mat-card-content class="component-card-content">
+          
+          <mat-card-header class="example-card-header">
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>The First User</mat-card-title>
+            <mat-card-subtitle>TheFirstUser.email</mat-card-subtitle>
+          </mat-card-header>
+  
+        </mat-card-content>
+    
+        <mat-card-actions>
+          <button mat-button>Log Out</button>
+          <span class="example-spacer"></span>
+          <button mat-button>Edit Profile</button>        
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  
+  
+  </mat-grid-list>
+  
+  <!-- <router-outlet></router-outlet> -->
+  
+  <footer class="footer">
+    © 2024 InnovaSpeak. All rights reserved.
+  </footer>
