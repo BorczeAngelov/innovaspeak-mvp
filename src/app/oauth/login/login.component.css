@@ -3,13 +3,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Center vertically in viewport */
+    height: 94.5vh; /* Center vertically in viewport */
   }
 
 .login-container {
     max-width: 400px;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 20px;
     background-color: #fff; /* White background */
   }
   

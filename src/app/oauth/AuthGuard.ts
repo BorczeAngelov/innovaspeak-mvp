@@ -7,7 +7,7 @@ export const AuthGuardFn: CanActivateFn = () => inject(AuthGuardService).canActi
 @Injectable({
   providedIn: 'root'
 })
-class AuthGuardService {
+export class AuthGuardService {
   constructor(private oauthService: OAuthService, private router: Router) { }
 
   async canActivate(): Promise<boolean> {
