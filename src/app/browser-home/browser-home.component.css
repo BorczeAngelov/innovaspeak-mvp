@@ -1,55 +1,58 @@
-.example-icon {
-    padding: 0 14px;
-  }
-  
   .example-spacer {
-    flex: 1 1 auto;
+      flex: 1 1 auto;
   }
-  
-  .example-card {
-    height: 100%;
-    width: 100%;
-  
-    padding: 0px;
-    margin: 0px;
-  }
-  
-  .example-card-header {    
-    margin: 0px;
-  }
-  
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-  }
-  
+
   .component-card {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 0px;
-    padding: 0px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-  
-    height: 100%;
-    width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+
+      height: 100%;
+      width: 100%;
   }
-  
+
+  .component-card-header {
+      padding: 0px;
+      margin: 0px;
+  }
+
   .component-card-content {
-    flex: 1; /* Make the content area grow to fill available space */  
-    padding: 0px;
-    margin: 0px;
+      flex: 1;
+      padding: 0px;
+      margin: 0px;
   }
-  
-  /* Assuming you have a specific class for the footer in your main layout */
+
+  .example-card-header {
+      margin: 0px;
+      padding: 0px;
+  }
+
+  .example-header-image {
+      background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+      background-size: cover;
+      margin-top: 5px;
+      margin-bottom: 5px;
+  }
+
   .footer {
-    height: 10px;
-    /* Adjust based on your footer's actual height */
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-    background-color: #f5f5f5;
-    border-top: 1px solid #e0e0e0;
+      height: 10px;
+      width: 100%;
+      text-align: center;
+      padding: 0px 0;
+      padding-bottom: 10px;
+      background-color: #f5f5f5;
+      border-top: 1px solid #e0e0e0;
+  }
+
+  .header-toolbar {
+      min-height: 30px !important;
+      /* Adjust this value as needed */
+      height: 30px !important;
+  }
+
+  .header-toolbar .mat-toolbar-row {
+      min-height: 30px !important;
+      height: 30px !important;
   }
