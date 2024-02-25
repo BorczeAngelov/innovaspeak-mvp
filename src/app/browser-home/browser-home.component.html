@@ -49,7 +49,7 @@
                     @for (avatar of avatars; track avatar) {
                     <mat-list-item>
 
-                        <mat-card class="example-card">
+                        <mat-card>
                             <mat-card-header class="example-card-header">
                                 <img mat-card-avatar src="assets/images/avatar-grace.jpg" alt="Avatar">
                                 <mat-card-title>{{avatar.name}}</mat-card-title>
@@ -71,18 +71,18 @@
                 <mat-card-title>Selected Avatar Info [Component]</mat-card-title>
             </mat-card-header>
 
-            <mat-card-content class="component-card-content">
+            <mat-card-content class="component-card-content"> 
 
 
-                <mat-card class="example-card">
+                <mat-card>
                     <mat-card-header class="component-card-header">
                       <mat-card-title>{{ aiAvatar.name }}</mat-card-title>
                       <mat-card-subtitle>{{ aiAvatar.subtitle }}</mat-card-subtitle>
                     </mat-card-header>
                   
-                    <img mat-card-image [src]="aiAvatar.imageUri"
+                    <img mat-card-image [src]="aiAvatar.imageUri"                    
                         alt="Illustration representing the AI Avatar"
-                        style="border-radius: 50px; margin: 10px;">
+                        style="border-radius: 50px; margin: 10px;"> 
                   
                     <mat-card-content>
                       <p>{{ aiAvatar.longText }}</p>
@@ -95,10 +95,10 @@
                   
                       <mat-divider></mat-divider>
                   
-                    </mat-card-content>
+                    </mat-card-content> 
                     <mat-card-actions>
                       <button mat-button>LIKE</button>
-                      <button mat-button>SHARE</button>
+                      <button mat-raised-button color="warn">SHARE</button>
                       <span class="example-spacer"></span>
                       <button mat-raised-button color="accent">SEND FEEDBACK</button>
                     </mat-card-actions>
@@ -162,7 +162,7 @@
                     @for (avatar of avatars; track avatar) {
                     <mat-list-item>
 
-                        <mat-card class="example-card">
+                        <mat-card>
                             <mat-card-header class="example-card-header">
                                 <div mat-card-avatar class="example-header-image"></div>
                                 <mat-card-title>{{avatar.name}}</mat-card-title>

@@ -1,0 +1,53 @@
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+$custom-colors: (
+  primary: #4A90E2,      // Soft blue for trust and calmness - mat.$light-blue-palette
+  accent: #FF6B6B,       // Warm orange or coral for a friendly feel - mat.$orange-palette
+  warn: #C44D58,         // Muted red for alerts or warnings - mat.$red-palette
+  text-bold: #263238,    // Dark grey for readability
+  text-normal: #607D8B,  // Medium grey for regular text
+  background: #FAFAFA,   // Very light grey for gentle backdrop
+  normal: #ECEFF1,       // Light grey for neutral backgrounds - better for reading text
+);
+
+$primary-palette: mat.define-palette(mat.$light-blue-palette);
+$accent-palette: mat.define-palette(mat.$orange-palette, A200, A100, A400);
+$warn-palette: mat.define-palette(mat.$red-palette);
+
+// Note: if you have performance issues, you can remove some weights
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+$custom-typography: mat.define-typography-config($font-family: 'Poppins');
+
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $primary-palette,
+    accent: $accent-palette,
+    warn: $warn-palette,
+  ),
+  background: map.get($custom-colors, 'normal'),
+  text: map.get($custom-colors, 'text-normal'),
+  typography: $custom-typography,
+));
+
+@include mat.all-component-themes($custom-theme);
+@include mat.typography-hierarchy($custom-typography);
+
+
+
+body {
+    background-color: map.get($custom-colors, 'background');
+    color: map.get($custom-colors, 'text-normal');
+  }
+  
+  h1, h2, h3 {
+    color: map.get($custom-colors, 'text-bold');
+  }
+  
+  .footer {
+    background-color: map.get($custom-colors, 'background'); // Apply custom background color for .footer
+  }
+
+.mat-card, mat-card-content, mat-card-header, mat-card-actions, mat-card-footer {
+    background: map.get($custom-colors, 'background');
+  }
