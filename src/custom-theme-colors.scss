@@ -63,3 +63,21 @@ mat-card-footer {
 .footer {
   background-color: map.get($custom-colors, 'background');
 }
+
+.message-user-author {
+  font-weight: 600;
+  color: map.get($custom-colors, 'primary'); 
+}
+
+.message-partner-author {
+  font-weight: 600; 
+  color: map.get($custom-colors, 'accent');
+}
+
+.user-message {
+  color: map.get($custom-colors, 'text-normal');
+}
+
+.partner-message {
+  color: map.get($custom-colors, 'text-normal');
+}

@@ -1,27 +1,46 @@
 <mat-card class="call-card">
   <mat-card-header>
-    <mat-card-title>{{ aiAvatar.name }}</mat-card-title>    
+    <mat-card-title>{{ aiAvatar.name }}</mat-card-title>
     <mat-card-subtitle>{{ aiAvatar.subtitle }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content class="content-with-button">
 
     <img mat-card-image [src]="aiAvatar.imageUri" alt="Illustration representing the AI Avatar"
-        style="border-radius: 10%; margin: 10px auto; display: block; max-width: 600px; width: 100%; height: auto;">
-    <mat-card-subtitle *ngIf="!isCallStarted">{{ aiAvatar.longText }}</mat-card-subtitle>       
+      style="border-radius: 10%; margin: 10px auto; display: block; max-width: 600px; width: 100%; height: auto;">
+    <mat-card-subtitle *ngIf="!isCallStarted">{{ aiAvatar.longText }}</mat-card-subtitle>
+
+    <button mat-raised-button color="accent" (click)="startEmulatedCull()" *ngIf="!isCallStarted">
+      <mat-icon>call</mat-icon>
+      Start Emulated Call
+    </button>
 
     <button mat-raised-button color="accent" (click)="startCall()" *ngIf="!isCallStarted">
       <mat-icon>call</mat-icon>
       Start Call
     </button>
 
-    <div class="chat-messages">
-      <div class="message" *ngFor="let message of messages$ | async">
-        <div class="message-author">{{message.author}}:</div>
-        <div class="message-text">{{message.text}}</div>
+
+    <div style="height: 300px; overflow-y: auto;">
+      <div *ngFor="let message of messages$ | async"
+        [ngStyle]="{'text-align': message.author === 'User' ? 'right' : 'left'}">
+        
+        <div [ngClass]="message.author === 'User' ? 'message-user-author' : 'message-partner-author'">
+          {{message.author}}
+        </div>
+        
+        <div [ngClass]="message.author === 'User' ? 'user-message' : 'partner-message'">
+
+          <span *ngFor="let word of message.words; let i = index" 
+              [@wordAnimation]="{value: '', params: {delay: i * 250}}"
+                [@blurToFocusEffect]="{value: '', params: {delay: i * 250}}">
+            {{word}}
+          </span>
+
+        </div>
       </div>
     </div>
-    
+
     <mat-divider></mat-divider>
   </mat-card-content>
 

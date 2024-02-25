@@ -4,21 +4,70 @@ import { CurrentUserInfoService } from '../services/current-user-info.service';
 import { VoxCallWrapperService } from '../services/vox-call-wrapper.service';
 import { INNOVASPEAK_AI_AGENT_NUMBER } from '../services/PublicConfigValues';
 import { CurrentUserInfo } from '../services/CurrentUserInfo';
-import { Observable, map, takeWhile, timer } from 'rxjs';
+import { Observable, interval, map, scan, takeWhile, timer } from 'rxjs';
 import { GraceModel } from '../models/AIAvatar.model';
+
+import { trigger, transition, style, animate, query, stagger, animation, useAnimation } from '@angular/animations';
+
+const wordAnimation = animation([
+  style({ opacity: 0, transform: 'translateY(-20px)' }),
+  animate('{{delay}}ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+]);
 
 @Component({
   selector: 'app-voice-chat-interface',
   standalone: true,
   imports: [SharedImportedMatModule],
   templateUrl: './voice-chat-interface.component.html',
-  styleUrl: './voice-chat-interface.component.css'
+  styleUrl: './voice-chat-interface.component.css',
+  animations: [
+    trigger('wordAnimation', [
+      transition(':enter', useAnimation(wordAnimation))
+    ]),
+    trigger('fadeInEffect', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('{{delay}}ms ease-in', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('slideInEffect', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('{{delay}}ms ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ]),
+    ]),
+    trigger('scalingEffect', [
+      transition(':enter', [
+        style({ transform: 'scale(0)', opacity: 0 }),
+        animate('{{delay}}ms ease-out', style({ transform: 'scale(1)', opacity: 1 }))
+      ]),
+    ]),
+    trigger('rotatingEffect', [
+      transition(':enter', [
+        style({ transform: 'rotateX(-90deg)', opacity: 0 }),
+        animate('{{delay}}ms ease-out', style({ transform: 'rotateX(0)', opacity: 1 }))
+      ]),
+    ]),
+    trigger('blurToFocusEffect', [
+      transition(':enter', [
+        style({ filter: 'blur(4px)', opacity: 0 }),
+        animate('{{delay}}ms ease-out', style({ filter: 'blur(0)', opacity: 1 }))
+      ]),
+    ]),
+    trigger('colorTransitionEffect', [
+      transition(':enter', [
+        style({ color: 'transparent' }),
+        animate('{{delay}}ms ease-out', style({ color: '*' })) // Assuming final color is set in CSS
+      ]),
+    ]),
+
+  ]
 })
 export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
 
   aiAvatar= new GraceModel();
 
-  messages$!: Observable<{ author: string, text: string }[]>;
+  messages$!: Observable<{ author: string, words: string[] }[]>;
 
   isCallStarted: boolean = false;
   callDuration$!: Observable<string>;
@@ -31,6 +80,26 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
     private voxCallService: VoxCallWrapperService) { }
 
   async ngOnInit(): Promise<void> {
+  }
+
+  async startEmulatedCull(){
+    this.messages$ = interval(2000).pipe(
+      scan((acc, val) => {
+
+        const author = val % 2 === 0 ? 'User' : 'Grace';
+        let text = `This is a message from ${author} number ${val}`;
+        text = text +text +text +text;
+
+        const words = text.trim().split(' ').map(word => `${word} `); // Split into words and add a trailing space
+        
+
+        return [...acc, { author,  words }];
+      }, [] as { author: string, words: string[] }[]),
+    );
+    
+    this.isCallStarted = true;
+    this.isCallActive = true;
+    this.startCallTimer();
   }
 
   async startCall() {
@@ -58,8 +127,9 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
   private async initializeVox(currentUser: CurrentUserInfo) {
     this.messages$ = this.voxCallService.transcriptMessages$.pipe(
       map(messages => messages.map(message => {
-        const [author, ...textParts] = message.split(':');
-        return { author, text: textParts.join(':') };
+        const [author, text] = message.split(':');
+        const words = text.trim().split(' ').map((word: any) => `${word} `);
+        return { author, words };
       }))
     );
 
