@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { VoiceChatInterfaceComponent } from '../voice-chat-interface/voice-chat-interface.component';
 import { SharedImportedMatModule } from '../shared-imported-mat.module';
+import { GraceModel } from '../models/AIAvatar.model';
 
 @Component({
   selector: 'app-browser-home',
@@ -11,6 +12,7 @@ import { SharedImportedMatModule } from '../shared-imported-mat.module';
 })
 export class BrowserHomeComponent {
 
+  aiAvatar= new GraceModel();
 
   avatars = [
     {
@@ -35,7 +37,7 @@ export class BrowserHomeComponent {
   from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
   originally bred for hunting.`;
 
-  bars = [
+  personalityTraits = [
     { label: 'Empathetic', value: 65 },
     { label: 'Proactive Engagement', value: 45 },
     { label: 'Humor and Personality', value: 30 },
