@@ -69,7 +69,7 @@ mat-card-footer {
   color: map.get($custom-colors, 'primary'); 
 }
 
-.message-partner-author {
+.message-avatar-author {
   font-weight: 600; 
   color: map.get($custom-colors, 'accent');
 }
@@ -78,6 +78,6 @@ mat-card-footer {
   color: map.get($custom-colors, 'text-normal');
 }
 
-.partner-message {
+.avatar-message {
   color: map.get($custom-colors, 'text-normal');
 }

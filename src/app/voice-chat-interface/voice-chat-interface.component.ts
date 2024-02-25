@@ -1,73 +1,28 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SharedImportedMatModule } from '../shared-imported-mat.module';
 import { CurrentUserInfoService } from '../services/current-user-info.service';
 import { VoxCallWrapperService } from '../services/vox-call-wrapper.service';
 import { INNOVASPEAK_AI_AGENT_NUMBER } from '../services/PublicConfigValues';
 import { CurrentUserInfo } from '../services/CurrentUserInfo';
-import { Observable, interval, map, scan, takeWhile, timer } from 'rxjs';
+import { Observable, interval, map, of, scan, takeWhile, timer } from 'rxjs';
 import { GraceModel } from '../models/AIAvatar.model';
+import { RealTimeCallTranscriptService } from '../services/real-time-call-transcript.service';
 
-import { trigger, transition, style, animate, query, stagger, animation, useAnimation } from '@angular/animations';
-
-const wordAnimation = animation([
-  style({ opacity: 0, transform: 'translateY(-20px)' }),
-  animate('{{delay}}ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-]);
 
 @Component({
   selector: 'app-voice-chat-interface',
   standalone: true,
   imports: [SharedImportedMatModule],
   templateUrl: './voice-chat-interface.component.html',
-  styleUrl: './voice-chat-interface.component.css',
-  animations: [
-    trigger('wordAnimation', [
-      transition(':enter', useAnimation(wordAnimation))
-    ]),
-    trigger('fadeInEffect', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('{{delay}}ms ease-in', style({ opacity: 1 })),
-      ]),
-    ]),
-    trigger('slideInEffect', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)', opacity: 0 }),
-        animate('{{delay}}ms ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
-      ]),
-    ]),
-    trigger('scalingEffect', [
-      transition(':enter', [
-        style({ transform: 'scale(0)', opacity: 0 }),
-        animate('{{delay}}ms ease-out', style({ transform: 'scale(1)', opacity: 1 }))
-      ]),
-    ]),
-    trigger('rotatingEffect', [
-      transition(':enter', [
-        style({ transform: 'rotateX(-90deg)', opacity: 0 }),
-        animate('{{delay}}ms ease-out', style({ transform: 'rotateX(0)', opacity: 1 }))
-      ]),
-    ]),
-    trigger('blurToFocusEffect', [
-      transition(':enter', [
-        style({ filter: 'blur(4px)', opacity: 0 }),
-        animate('{{delay}}ms ease-out', style({ filter: 'blur(0)', opacity: 1 }))
-      ]),
-    ]),
-    trigger('colorTransitionEffect', [
-      transition(':enter', [
-        style({ color: 'transparent' }),
-        animate('{{delay}}ms ease-out', style({ color: '*' })) // Assuming final color is set in CSS
-      ]),
-    ]),
-
-  ]
+  styleUrl: './voice-chat-interface.component.css'
 })
 export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
 
-  aiAvatar= new GraceModel();
+  aiAvatar = new GraceModel();
 
-  messages$!: Observable<{ author: string, words: string[] }[]>;
+  messages$!: Observable<{ author: string, text: Observable<string> }[]>;
+  private messagesCache: { [key: string]: Observable<string> } = {};
 
   isCallStarted: boolean = false;
   callDuration$!: Observable<string>;
@@ -77,26 +32,23 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
 
   constructor(
     private currentUserInfoService: CurrentUserInfoService,
-    private voxCallService: VoxCallWrapperService) { }
+    private voxCallService: VoxCallWrapperService,
+    private realTimeCallTranscriptService: RealTimeCallTranscriptService) { }
 
   async ngOnInit(): Promise<void> {
   }
 
-  async startEmulatedCull(){
+  async startEmulatedCall() {
     this.messages$ = interval(2000).pipe(
       scan((acc, val) => {
-
         const author = val % 2 === 0 ? 'User' : 'Grace';
-        let text = `This is a message from ${author} number ${val}`;
-        text = text +text +text +text;
-
-        const words = text.trim().split(' ').map(word => `${word} `); // Split into words and add a trailing space
-        
-
-        return [...acc, { author,  words }];
-      }, [] as { author: string, words: string[] }[]),
+        const text = `This is a message from ${author} number ${val}`;
+        // Apply the typing effect to each new message
+        const textWithEffect$ = this.realTimeCallTranscriptService.simulateTypingEffect(text);
+        return [{ author, text: textWithEffect$ }, ...acc];
+      }, [] as { author: string; text: Observable<string> }[])
     );
-    
+
     this.isCallStarted = true;
     this.isCallActive = true;
     this.startCallTimer();
@@ -125,13 +77,23 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
   }
 
   private async initializeVox(currentUser: CurrentUserInfo) {
-    this.messages$ = this.voxCallService.transcriptMessages$.pipe(
-      map(messages => messages.map(message => {
-        const [author, text] = message.split(':');
-        const words = text.trim().split(' ').map((word: any) => `${word} `);
-        return { author, words };
-      }))
-    );
+
+    this.voxCallService.transcriptMessages$.pipe(
+      scan((acc, messages) => {
+        const newMessages = messages.filter(message => !acc.find(cachedMessage => cachedMessage.rawText === message));
+
+        newMessages.forEach(message => {
+          const [author, text] = message.split(':');
+          const messageKey = `message_${Object.keys(this.messagesCache).length + 1}`;
+          this.messagesCache[messageKey] = this.realTimeCallTranscriptService.simulateTypingEffect(text);
+          acc.unshift({ author, text: this.messagesCache[messageKey], rawText: message });
+        });
+        return acc;
+      }, [] as { author: string; text: Observable<string>; rawText: string }[])
+    ).subscribe(processedMessages => {
+      this.messages$ = of(processedMessages);
+      this.scrollToTop();
+    });
 
     console.log('Logging in to VoxCall service...');
     await this.voxCallService.loginAsync(currentUser.id, currentUser.id);
@@ -162,5 +124,9 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
     await this.voxCallService?.hangUpAsync()
+  }
+
+  scrollToTop(): void {
+    this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
   }
 }

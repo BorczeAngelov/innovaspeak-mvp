@@ -121,9 +121,9 @@ export class VoxCallWrapperService {
       const messageData = JSON.parse(event.text);
 
       if (messageData.action === 'log_ai_response') {
-        this.transcriptMessagesSubject.next([...this.transcriptMessagesSubject.value, 'AI Response Transcript: ' + messageData.data]);
+        this.transcriptMessagesSubject.next([...this.transcriptMessagesSubject.value, 'Grace: ' + messageData.data]);
       } else if (messageData.action === 'log_ai_request') {
-        this.transcriptMessagesSubject.next([...this.transcriptMessagesSubject.value, 'AI Request Transcript: ' + messageData.data]);
+        this.transcriptMessagesSubject.next([...this.transcriptMessagesSubject.value, 'User: ' + messageData.data]);
       }
       
     } catch (error) {

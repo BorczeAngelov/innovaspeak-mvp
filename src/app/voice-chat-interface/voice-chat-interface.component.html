@@ -10,7 +10,7 @@
       style="border-radius: 10%; margin: 10px auto; display: block; max-width: 600px; width: 100%; height: auto;">
     <mat-card-subtitle *ngIf="!isCallStarted">{{ aiAvatar.longText }}</mat-card-subtitle>
 
-    <button mat-raised-button color="accent" (click)="startEmulatedCull()" *ngIf="!isCallStarted">
+    <button mat-raised-button color="accent" (click)="startEmulatedCall()" *ngIf="!isCallStarted">
       <mat-icon>call</mat-icon>
       Start Emulated Call
     </button>
@@ -21,22 +21,16 @@
     </button>
 
 
-    <div style="height: 300px; overflow-y: auto;">
+    <div #messageContainer style="height: 150px; overflow-y: auto;">
       <div *ngFor="let message of messages$ | async"
-        [ngStyle]="{'text-align': message.author === 'User' ? 'right' : 'left'}">
-        
-        <div [ngClass]="message.author === 'User' ? 'message-user-author' : 'message-partner-author'">
+           [ngStyle]="{'text-align': message.author === 'User' ? 'right' : 'left'}">
+           
+        <div [ngClass]="message.author === 'User' ? 'message-user-author' : 'message-avatar-author'">
           {{message.author}}
         </div>
         
-        <div [ngClass]="message.author === 'User' ? 'user-message' : 'partner-message'">
-
-          <span *ngFor="let word of message.words; let i = index" 
-              [@wordAnimation]="{value: '', params: {delay: i * 250}}"
-                [@blurToFocusEffect]="{value: '', params: {delay: i * 250}}">
-            {{word}}
-          </span>
-
+        <div [ngClass]="message.author === 'User' ? 'user-message' : 'avatar-message'">
+          <span>{{ message.text | async }}</span>
         </div>
       </div>
     </div>
