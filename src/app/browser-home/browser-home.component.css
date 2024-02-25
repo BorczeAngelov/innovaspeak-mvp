@@ -24,30 +24,33 @@
   }
 
   .example-card-header {
-      margin: 0px,0px,0px,0px;      
+      margin: 0px, 0px, 0px, 0px;
       padding: 0px, 0px, 0px, 0px;
   }
 
-  .example-header-image {    
+  .example-header-image {
       background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
       background-size: cover;
       margin: 0px;
       padding: 0px;
   }
 
-  .footer {
+  .footer { 
       height: 10px;
       width: 100%;
       text-align: center;
       padding: 0px 0;
       padding-bottom: 10px;
       border-top: 1px solid;
+      position: fixed;
+      bottom: 0;
+      z-index: 100;
   }
 
   .header-toolbar {
       min-height: 30px !important;
-      /* Adjust this value as needed */
       height: 30px !important;
+      flex-shrink: 0;
   }
 
   .header-toolbar .mat-toolbar-row {

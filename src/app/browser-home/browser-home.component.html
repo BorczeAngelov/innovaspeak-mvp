@@ -1,8 +1,6 @@
 <mat-toolbar color="primary" class="header-toolbar">
     <mat-toolbar-row>
-        <mat-icon>hearing</mat-icon>
         <mat-icon>memory</mat-icon>
-        <mat-icon>mic</mat-icon>
         <span>InnovaSpeak</span>
 
         <span class="example-spacer"></span>
@@ -12,197 +10,57 @@
             About
         </button>
 
-        <button mat-button>
-            <mat-icon>rss_feed</mat-icon>
-            Blog
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar color="primary" class="header-toolbar">
+    <mat-toolbar-row>
+        <button mat-button (click)="toggleSidenav()" style="margin-left: -20px; margin-right: 20px;">
+            <mat-icon color="warn">menu</mat-icon>
+            Select Avatar
         </button>
 
-        <button mat-button>
-            <mat-icon>help_outline</mat-icon>
-            FAQ
-        </button>
+        <span class="example-spacer"></span>
 
-        <button mat-button>
-            <mat-icon>verified_user</mat-icon>
-            Terms and Privacy Policy
+        <button mat-raised-button color="accent">
+            <mat-icon>feedback</mat-icon>
+            Send Feedback
         </button>
-
-        <button mat-button>
-            <mat-icon>email</mat-icon>
-            Contact
-        </button>
-
     </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-grid-list cols="100" rowHeight="1:1">
 
-    <!-- #1 AI Avatars [Component] -->
-    <mat-grid-tile colspan="20" rowspan="35">
-        <mat-card class="component-card">
-            <mat-card-header class="component-card-header">
-                <mat-card-title>AI Avatars [Component]</mat-card-title>
-            </mat-card-header>
+<mat-sidenav-container style="height: 100%;">
+    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" style="width: 350px;">
+        <mat-toolbar color="primary">
 
-            <mat-card-content class="component-card-content">
-                <mat-selection-list style="padding: 0; margin: 0;">
-                    @for (avatar of avatars; track avatar) {
-                    <mat-list-item>
+            <span>Virtual Innova Avatars</span>
 
-                        <mat-card>
-                            <mat-card-header class="example-card-header">
-                                <img mat-card-avatar src="assets/images/avatar-grace.jpg" alt="Avatar">
-                                <mat-card-title>{{avatar.name}}</mat-card-title>
-                                <mat-card-subtitle>{{avatar.description}}</mat-card-subtitle>
-                            </mat-card-header>
-                        </mat-card>
-                    </mat-list-item>
-                    }
-                </mat-selection-list>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-
-
-    <!-- #2 Selected Avatar Info [Component] -->
-    <mat-grid-tile colspan="30" rowspan="45">
-        <mat-card class="component-card">
-            <mat-card-header class="component-card-header">
-                <mat-card-title>Selected Avatar Info [Component]</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content class="component-card-content"> 
-
-
+            <span class="example-spacer"></span>
+            <button mat-icon-button (click)="toggleSidenav()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+        </mat-toolbar>
+        <mat-selection-list style="padding: 0; margin: 0;">
+            <mat-list-item *ngFor="let avatar of avatars; trackBy: selectAvatar">
                 <mat-card>
-                    <mat-card-header class="component-card-header">
-                      <mat-card-title>{{ aiAvatar.name }}</mat-card-title>
-                      <mat-card-subtitle>{{ aiAvatar.subtitle }}</mat-card-subtitle>
+                    <mat-card-header class="example-card-header">
+                        <img mat-card-avatar src="assets/images/avatar-grace.jpg" alt="Avatar">
+                        <mat-card-title>{{avatar.name}}</mat-card-title>
+                        <mat-card-subtitle>{{avatar.description}}</mat-card-subtitle>
                     </mat-card-header>
-                  
-                    <img mat-card-image [src]="aiAvatar.imageUri"                    
-                        alt="Illustration representing the AI Avatar"
-                        style="border-radius: 50px; margin: 10px;"> 
-                  
-                    <mat-card-content>
-                      <p>{{ aiAvatar.longText }}</p>
-                      <mat-divider></mat-divider>
-                  
-                      <div *ngFor="let trait of aiAvatar.personalityTraits">
-                        <span>{{ trait.label }}</span>
-                        <mat-progress-bar mode="determinate" [value]="trait.value"></mat-progress-bar>
-                      </div>
-                  
-                      <mat-divider></mat-divider>
-                  
-                    </mat-card-content> 
-                    <mat-card-actions>
-                      <button mat-button>LIKE</button>
-                      <button mat-raised-button color="warn">SHARE</button>
-                      <span class="example-spacer"></span>
-                      <button mat-raised-button color="accent">SEND FEEDBACK</button>
-                    </mat-card-actions>
-                  </mat-card>
+                </mat-card>
+            </mat-list-item>
+        </mat-selection-list>
+    </mat-sidenav>
 
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-
-    <!-- #3 Call With Avatar [Component] -->
-    <mat-grid-tile colspan="50" rowspan="45">
-        <mat-card class="component-card">
-            <mat-card-header class="component-card-header">
-                <mat-card-title>Call With Avatar [Component]</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content class="component-card-content">
-                <app-voice-chat-interface>
-                </app-voice-chat-interface>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-
-
-    
-
-    <!-- #6 User Info [Component] -->
-    <mat-grid-tile colspan="20" rowspan="10">
-        <mat-card class="component-card">
-            <mat-card-header class="component-card-header">
-                <mat-card-title>User Info [Component]</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content class="component-card-content">
-
-                <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
-                    <mat-card-title>The First User</mat-card-title>
-                    <mat-card-subtitle>TheFirstUser.email</mat-card-subtitle>
-                </mat-card-header>
-
-            </mat-card-content>
-
-            <mat-card-actions>
-                <button mat-button>Log Out</button>
-                <span class="example-spacer"></span>
-                <button mat-button>Edit Profile</button>
-            </mat-card-actions>
-        </mat-card>
-    </mat-grid-tile>
-
-    <!-- #4 Call History [Component] - out-of-scope
-        <mat-grid-tile colspan="15" rowspan="25">
-        <mat-card class="component-card">
-            <mat-card-header class="component-card-header">
-                <mat-card-title>Call History [Component]</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content class="component-card-content">
-                <mat-selection-list style="padding: 0; margin: 0;">
-                    @for (avatar of avatars; track avatar) {
-                    <mat-list-item>
-
-                        <mat-card>
-                            <mat-card-header class="example-card-header">
-                                <div mat-card-avatar class="example-header-image"></div>
-                                <mat-card-title>{{avatar.name}}</mat-card-title>
-                                <mat-card-subtitle>{{avatar.description}}</mat-card-subtitle>
-                            </mat-card-header>
-                        </mat-card>
-                    </mat-list-item>
-                    }
-                </mat-selection-list>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-
-     #5 Gamification [Component] - out-of-scop
-    <mat-grid-tile colspan="15" rowspan="20">
-        <mat-card class="component-card">
-            <mat-card-header class="component-card-header">
-                <mat-card-title>Gamification [Component]</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content class="component-card-content" style="padding: 15px;">
-                <div>
-                    <h3>Points: 450/500</h3>
-                    <mat-progress-bar mode="determinate" value="90" color="primary"></mat-progress-bar>
-                </div>
-
-                <h3>Badges Earned</h3>
-                <div>
-                    <mat-chip-listbox>
-                        <mat-chip color="primary" selected><mat-icon>star</mat-icon> Star Achiever</mat-chip>
-                        <mat-chip color="accent" selected><mat-icon>emoji_events</mat-icon> Top Contributor</mat-chip>
-                        <mat-chip color="warn" selected><mat-icon>lock_clock</mat-icon> Time Keeper</mat-chip>
-                    </mat-chip-listbox>
-                </div>
-
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>  -->
-
-</mat-grid-list>
+    <mat-sidenav-content>
+        <app-voice-chat-interface>
+        </app-voice-chat-interface>
+        <div style="margin-bottom: 30px;">
+            <!-- dummy control for the non-scrollable footer -->
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
 <footer class="footer">
     © 2024 InnovaSpeak. All rights reserved.

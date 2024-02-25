@@ -1,12 +1,14 @@
 <div *ngIf="isAuthenticated; else useRouter">
 
-  <div *ngIf="isDesktop; else mobileContent">
+  <app-browser-home></app-browser-home>
+  
+  <!-- <div *ngIf="isDesktop; else mobileContent">
     <app-browser-home></app-browser-home>
   </div>
   <ng-template #mobileContent>
     <app-voice-chat-interface>
     </app-voice-chat-interface>
-  </ng-template>
+  </ng-template> -->
 
 </div>
 <ng-template #useRouter>

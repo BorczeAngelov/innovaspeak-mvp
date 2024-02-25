@@ -5,6 +5,7 @@ import { VoxCallWrapperService } from '../services/vox-call-wrapper.service';
 import { INNOVASPEAK_AI_AGENT_NUMBER } from '../services/PublicConfigValues';
 import { CurrentUserInfo } from '../services/CurrentUserInfo';
 import { Observable, map, takeWhile, timer } from 'rxjs';
+import { GraceModel } from '../models/AIAvatar.model';
 
 @Component({
   selector: 'app-voice-chat-interface',
@@ -14,6 +15,8 @@ import { Observable, map, takeWhile, timer } from 'rxjs';
   styleUrl: './voice-chat-interface.component.css'
 })
 export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
+
+  aiAvatar= new GraceModel();
 
   messages$!: Observable<{ author: string, text: string }[]>;
 

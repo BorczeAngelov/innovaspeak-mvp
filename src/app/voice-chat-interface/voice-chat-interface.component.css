@@ -7,7 +7,7 @@
   .call-card {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensure the card expands to fill the container */
+    height: 100%;
   }
   
   .content-with-button {
