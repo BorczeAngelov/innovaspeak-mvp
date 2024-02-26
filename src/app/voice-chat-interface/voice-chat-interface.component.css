@@ -16,57 +16,47 @@
     justify-content: space-between; /* This ensures that the chat messages and actions are pushed to the top and bottom respectively */
     height: 100%;
   }
-
-  .actions {    
-    flex-grow: 1;
-  } 
   
   
 .example-spacer {
   flex: 1 1 auto;
 }
 
-.ptt-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+
+.fixed-buttons-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
-.settings-button {
-  position: absolute;
-  top: 0;
-  right: 0;
+.fixed-buttons-container button {
+  pointer-events: auto; /* Enables clicks on the buttons */
 }
 
-.push-to-talk-button {
-  margin: 100px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: pulse-animation 10s infinite;
+/* TODO: when is full screen, then the location might change */
+.top-right {
+  position: fixed;
+  top: 62px;
+  right: 20px;
 }
 
-.animated-button {
-  animation: pulse-animation 10s infinite;    
+.bottom-right {
+  position: fixed;
+  bottom: 32px;
+  right: 20px;
 }
 
-@keyframes pulse-animation {
-  0% {
-    transform: scale(1);
-  }
-  70% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
+.bottom-left {
+  position: fixed;
+  bottom: 32px;
+  left: 20px;
 }
 
-.push-to-talk-button > span {
-  font-size: 1.2rem; /* Larger font size */
-  margin-top: 25px; /* Adjust spacing */
-  margin-bottom: -15px; /* Adjust spacing */
+@keyframes blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
 }
-  
+
+.blinking-dots {
+  animation: blink 5s infinite;
+}

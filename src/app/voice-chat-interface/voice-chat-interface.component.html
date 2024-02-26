@@ -1,93 +1,75 @@
-<mat-card class="call-card">
-  <mat-card-header>
-    <mat-card-title>{{ aiAvatar.name }}</mat-card-title>
-    <mat-card-subtitle>{{ aiAvatar.subtitle }}</mat-card-subtitle>
-  </mat-card-header>
+<div style="margin: -9px;">
+  <mat-card class="call-card">
+    <mat-card-header>
+      <mat-card-title>{{ aiAvatar.name }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ aiAvatar.subtitle }}
+      </mat-card-subtitle>
+    </mat-card-header>
 
-  <mat-card-content class="content-with-button">
+    <mat-card-content class="content-with-button">
+      <img mat-card-image [src]="aiAvatar.imageUri" alt="Illustration representing the AI Avatar"
+        style="border-radius: 10%; margin: 2px auto; display: block; max-width: 600px; width: 100%; height: auto;">
 
-    <img mat-card-image [src]="aiAvatar.imageUri" alt="Illustration representing the AI Avatar"
-      style="border-radius: 10%; margin: 10px auto; display: block; max-width: 600px; width: 100%; height: auto;">
-    <mat-card-subtitle *ngIf="!isCallStarted">{{ aiAvatar.longText }}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="!isCallStarted">{{ aiAvatar.longText }}</mat-card-subtitle>
 
-    <button mat-raised-button color="accent" (click)="startEmulatedCall()" *ngIf="!isCallStarted">
-      <mat-icon>call</mat-icon>
-      Start Emulated Call
-    </button>
+      <button mat-raised-button color="accent" (click)="startEmulatedCall()" *ngIf="!isCallStarted">
+        <mat-icon>call</mat-icon>
+        Start Emulated Call
+      </button>
 
-    <button mat-raised-button color="accent" (click)="startCall()" *ngIf="!isCallStarted">
-      <mat-icon>call</mat-icon>
-      Start Call
-    </button>
+      <button mat-raised-button color="accent" (click)="startCall()" *ngIf="!isCallStarted">
+        <mat-icon>call</mat-icon>
+        Start Call
+      </button>
 
 
-    <div #messageContainer style="height: 150px; overflow-y: auto;">
-      <div *ngFor="let message of messages$ | async"
-           [ngStyle]="{'text-align': message.author === 'User' ? 'right' : 'left'}">
-           
-        <div [ngClass]="message.author === 'User' ? 'message-user-author' : 'message-avatar-author'">
-          {{message.author}}
-        </div>
-        
-        <div [ngClass]="message.author === 'User' ? 'user-message' : 'avatar-message'">
-          <span>{{ message.text | async }}</span>
+      <div #messageContainer style="height: 100px; overflow-y: auto;">
+        <div *ngFor="let message of messages$ | async"
+          [ngStyle]="{'text-align': message.author === 'User' ? 'right' : 'left'}">
+
+          <div [ngClass]="message.author === 'User' ? 'message-user-author' : 'message-avatar-author'">
+            {{message.author}}
+          </div>
+
+          <div [ngClass]="message.author === 'User' ? 'user-message' : 'avatar-message'">
+            <span>{{ message.text | async }}</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <mat-divider></mat-divider>
-  </mat-card-content>
+      <mat-divider></mat-divider>
+    </mat-card-content>
 
-  <mat-card-actions class="ptt-actions">
+    <mat-card-actions>
+      <div class="fixed-buttons-container">
+        <button mat-fab color="normal" class="top-right">
+          <mat-icon>fullscreen</mat-icon>
+        </button>
 
-    <div class="settings-button">
-      <button mat-icon-button>
-        <mat-icon>settings</mat-icon>
-      </button>
-    </div>
+        <button mat-fab class="bottom-right" *ngIf="isCallStarted">
+          <mat-icon (mousedown)="startTalking()" (mouseup)="stopTalking()">mic</mat-icon>
+        </button>
 
-    <div class="push-to-talk-button">
-      <button mat-fab color="primary" class="animated-button" (mousedown)="startTalking()" (mouseup)="stopTalking()">
-        <mat-icon>mic</mat-icon>
-      </button>
-      <span>Push to Talk</span>
-    </div>
-  </mat-card-actions>
+        <button mat-fab color="warn" class="bottom-left" *ngIf="isCallStarted">
+          <mat-icon>call_end</mat-icon>
+        </button>
+      </div>
 
-  <mat-card-footer>
-    <mat-card-subtitle>Call Duration: <span
-        *ngIf="callDuration$ | async as duration">{{duration}}</span></mat-card-subtitle>
-    <mat-divider></mat-divider>
-    <div class="status-display">
-      <ng-container *ngIf="callStatus === 'speaking'; else notSpeaking">
-        <mat-icon color="warn">mic</mat-icon>
-        <span>User Speaking...</span>
-      </ng-container>
-      <mat-progress-bar *ngIf="callStatus !== 'idle'" mode="indeterminate"></mat-progress-bar>
+      <mat-card-subtitle style="display: flex; align-items: center; justify-content: center; margin: 00px auto;"
+        class="blinking-dots">
+        <mat-icon color="primary">memory</mat-icon>
+        <span style="display: inline-block;">AI Avatar is thinking.....</span>
+      </mat-card-subtitle>
 
-      <ng-container>
+      <!-- <ng-container>
         <mat-icon color="primary">memory</mat-icon>
         <span>AI Avatar Thinking...</span>
       </ng-container>
-      <mat-progress-bar *ngIf="callStatus !== 'idle'" mode="indeterminate"></mat-progress-bar>
-
       <ng-container>
         <mat-icon color="accent">hearing</mat-icon>
         <span>AI Avatar Talking...</span>
-      </ng-container>
-      <mat-progress-bar *ngIf="callStatus !== 'idle'" mode="indeterminate"></mat-progress-bar>
-
-      <!-- example below -->
-      <ng-template #notSpeaking>
-        <ng-container *ngIf="callStatus === 'receiving'; else idle">
-          <mat-icon color="accent">hearing</mat-icon>
-          <span>Receiving...</span>
-        </ng-container>
-        <ng-template #idle>
-          <mat-icon>phone_in_talk</mat-icon>
-          <span>Idle</span>
-        </ng-template>
-      </ng-template>
-    </div>
-  </mat-card-footer>
-</mat-card>
+      </ng-container> -->
+    </mat-card-actions>
+  </mat-card>
+</div>
