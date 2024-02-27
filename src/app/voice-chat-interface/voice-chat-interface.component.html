@@ -1,4 +1,5 @@
-<div style="margin: -9px;">
+<div style="margin: -15px 0px 0px 0px; max-width: 100%;">
+
   <mat-card class="call-card">
     <mat-card-header>
       <mat-card-title>{{ aiAvatar.name }}</mat-card-title>
@@ -41,35 +42,60 @@
       <mat-divider></mat-divider>
     </mat-card-content>
 
-    <mat-card-actions>
-      <div class="fixed-buttons-container">
-        <button mat-fab color="normal" class="top-right">
-          <mat-icon>fullscreen</mat-icon>
-        </button>
+    <mat-card-footer>
+      <button mat-fab color="normal" style="position: fixed; top: 62px; right: 20px;">
+        <mat-icon>fullscreen</mat-icon>
+      </button>
 
-        <button mat-fab class="bottom-right" *ngIf="isCallStarted">
-          <mat-icon (mousedown)="startTalking()" (mouseup)="stopTalking()">mic</mat-icon>
-        </button>
+      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px 0px;">
+        <div style="flex: 0 1 auto; margin-left: 20px;">
+          <button mat-fab color="warn" *ngIf="isCallStarted">
+            <mat-icon>call_end</mat-icon>
+          </button>
+        </div>
 
-        <button mat-fab color="warn" class="bottom-left" *ngIf="isCallStarted">
-          <mat-icon>call_end</mat-icon>
-        </button>
+        <div style="flex: 1 1 auto; display: flex; justify-content: center; align-items: center;">
+
+          <mat-card-subtitle class="blinking-dots"
+            style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+
+            
+
+            <ng-container *ngIf="currentIndex === 0">
+              <mat-icon color="accent">mic</mat-icon>
+              <span>User is speaking...</span>
+            </ng-container>
+            
+            <ng-container *ngIf="currentIndex === 1">
+              <mat-icon color="primary">analytics</mat-icon>
+              <span>Processing user input...</span>
+            </ng-container>
+
+            <ng-container *ngIf="currentIndex === 2">
+              <mat-icon color="primary">psychology</mat-icon>
+              <span>AI Avatar is thinking...</span>
+            </ng-container>
+
+            <ng-container *ngIf="currentIndex === 3">
+              <mat-icon color="accent">record_voice_over</mat-icon>
+              <span>AI Avatar is speaking...</span>
+            </ng-container>
+
+            <ng-container *ngIf="currentIndex === 4">
+              <mat-icon color="primary">hearing</mat-icon>
+              <span>Waiting for user to speak...</span>
+            </ng-container>
+
+          </mat-card-subtitle>
+        </div>
+
+        <div style="flex: 0 1 auto; margin-right: 20px;">
+          <button mat-fab *ngIf="isCallStarted">
+            <mat-icon (mousedown)="startTalking()" (mouseup)="stopTalking()">mic</mat-icon>
+          </button>
+        </div>
       </div>
 
-      <mat-card-subtitle style="display: flex; align-items: center; justify-content: center; margin: 00px auto;"
-        class="blinking-dots">
-        <mat-icon color="primary">memory</mat-icon>
-        <span style="display: inline-block;">AI Avatar is thinking.....</span>
-      </mat-card-subtitle>
-
-      <!-- <ng-container>
-        <mat-icon color="primary">memory</mat-icon>
-        <span>AI Avatar Thinking...</span>
-      </ng-container>
-      <ng-container>
-        <mat-icon color="accent">hearing</mat-icon>
-        <span>AI Avatar Talking...</span>
-      </ng-container> -->
-    </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
 </div>

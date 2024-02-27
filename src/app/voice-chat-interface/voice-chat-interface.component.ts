@@ -30,12 +30,18 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
   isCallActive = false;
   callStatus = 'speaking';
 
+  currentIndex: number = 0;
+  private intervalId: any;
+
   constructor(
     private currentUserInfoService: CurrentUserInfoService,
     private voxCallService: VoxCallWrapperService,
     private realTimeCallTranscriptService: RealTimeCallTranscriptService) { }
 
   async ngOnInit(): Promise<void> {
+    this.intervalId = setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % 5;
+    }, 10000); // Rotate every 10 seconds
   }
 
   async startEmulatedCall() {
@@ -123,7 +129,10 @@ export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
   }
 
   async ngOnDestroy() {
-    await this.voxCallService?.hangUpAsync()
+    await this.voxCallService?.hangUpAsync();
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   scrollToTop(): void {
