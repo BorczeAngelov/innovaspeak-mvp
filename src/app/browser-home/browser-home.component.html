@@ -41,7 +41,7 @@
             </button>
         </mat-toolbar>
         <mat-selection-list style="padding: 0; margin: 0;">
-            <mat-list-item *ngFor="let avatar of avatars; trackBy: selectAvatar">
+            <mat-list-item *ngFor="let avatar of avatars;  trackBy: trackByFn" (click)="selectAvatar(avatar)">
                 <mat-card>
 
                     <mat-card-header class="example-card-header">
@@ -57,7 +57,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <app-voice-chat-interface>
+        <app-voice-chat-interface [aiAvatar]="selectedAvatar">
         </app-voice-chat-interface>
         <div style="margin-bottom: 30px;">
             <!-- dummy control for the non-scrollable footer -->

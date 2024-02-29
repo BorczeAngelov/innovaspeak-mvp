@@ -14,20 +14,25 @@ export class BrowserHomeComponent implements OnInit {
 
   isSidenavOpen = false;
   avatars: AIAvatarModel[] = [];
+  selectedAvatar!: AIAvatarModel;
 
   constructor() { }
 
   ngOnInit(): void {
     var grace = new GraceModel();
     this.avatars = [grace,...generateAvatarObjects(GenericAvatarImages)];
+    this.selectAvatar(grace);
   }
-
 
   toggleSidenav() {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
 
-  selectAvatar(index: any, avatar: any) {
-    return avatar ? avatar.id : undefined;
+  trackByFn(index: number, avatar: AIAvatarModel): any {
+    return avatar.name;
+  }
+
+  selectAvatar(avatar: AIAvatarModel): void {
+    this.selectedAvatar = avatar;
   }
 }

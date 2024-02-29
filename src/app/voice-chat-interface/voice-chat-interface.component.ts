@@ -1,11 +1,11 @@
-import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SharedImportedMatModule } from '../shared-imported-mat.module';
 import { CurrentUserInfoService } from '../services/current-user-info.service';
 import { VoxCallWrapperService } from '../services/vox-call-wrapper.service';
 import { INNOVASPEAK_AI_AGENT_NUMBER } from '../services/PublicConfigValues';
 import { CurrentUserInfo } from '../services/CurrentUserInfo';
 import { Observable, interval, map, of, scan, takeWhile, timer } from 'rxjs';
-import { GraceModel } from '../models/AIAvatar.model';
+import { AIAvatarModel, GraceModel } from '../models/AIAvatar.model';
 import { RealTimeCallTranscriptService } from '../services/real-time-call-transcript.service';
 
 
@@ -18,8 +18,9 @@ import { RealTimeCallTranscriptService } from '../services/real-time-call-transc
 })
 export class VoiceChatInterfaceComponent implements OnInit, OnDestroy {
   @ViewChild('messageContainer') messageContainer!: ElementRef;
+  @Input() aiAvatar!: AIAvatarModel;
 
-  aiAvatar = new GraceModel();
+  // aiAvatar = new GraceModel(); 
 
   messages$!: Observable<{ author: string, text: Observable<string> }[]>;
   private messagesCache: { [key: string]: Observable<string> } = {};
