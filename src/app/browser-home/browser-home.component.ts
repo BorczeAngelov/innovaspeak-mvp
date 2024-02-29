@@ -21,7 +21,7 @@ export class BrowserHomeComponent implements OnInit {
   ngOnInit(): void {
     var grace = new GraceModel();
     this.avatars = [grace, ...generateAvatarObjects()];
-    this.selectAvatar(grace);
+    this.selectedAvatar = grace;
   }
 
   toggleSidenav() {
@@ -34,5 +34,6 @@ export class BrowserHomeComponent implements OnInit {
 
   selectAvatar(avatar: AIAvatarModel): void {
     this.selectedAvatar = avatar;
+    this.toggleSidenav()
   }
 }

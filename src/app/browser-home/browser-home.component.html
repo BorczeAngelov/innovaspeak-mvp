@@ -41,19 +41,16 @@
             </button>
         </mat-toolbar>
         <mat-selection-list style="padding: 0; margin: 0;">
-            <mat-list-item *ngFor="let avatar of avatars;  trackBy: trackByFn" (click)="selectAvatar(avatar)">
-                <mat-card>
-
-                    <mat-card-header class="example-card-header">
-                        <img mat-card-avatar [src]="avatar.imageUri" alt="Avatar">
-                        <mat-card-title>{{avatar.name}}</mat-card-title>
-                        <mat-card-subtitle>{{avatar.longText}}</mat-card-subtitle>
-                    </mat-card-header>
-
-
-                </mat-card>
+            <mat-list-item *ngFor="let avatar of avatars; trackBy: trackByFn" (click)="selectAvatar(avatar)" style="border-bottom: 1px solid #eee; padding: 10px;">
+              <div style="display: flex; align-items: center;">
+                <img [src]="avatar.imageUri" alt="{{avatar.name}}" style="width: 50px; height: 50px; border-radius: 25px; margin-right: 20px;">
+                <div>
+                  <div style="font-weight: bold;">{{avatar.name}}</div>
+                  <div style="font-size: 0.85rem;">{{avatar.subtitle}}</div>
+                </div>
+              </div>
             </mat-list-item>
-        </mat-selection-list>
+          </mat-selection-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
