@@ -1,21 +1,14 @@
-export interface Trait {
-    label: string;
-    value: number;
-}
-
 export class AIAvatarModel {
     name: string;
     subtitle: string;
     imageUri: string;
     longText: string;
-    personalityTraits: Trait[];
 
-    constructor(name: string, subtitle: string, imageUri: string, longText: string, personalityTraits: Trait[]) {
+    constructor(name: string, subtitle: string, imageUri: string, longText: string) {
         this.name = name;
         this.subtitle = subtitle;
         this.imageUri = imageUri;
         this.longText = longText;
-        this.personalityTraits = personalityTraits;
     }
 }
 
@@ -31,15 +24,29 @@ export class GraceModel extends AIAvatarModel {
         With just a question, we'll dive deep into your day, exploring moments that made you smile or pause.
         Ready for a heart-to-heart? Let's talk about your day.`;
 
-        // prompt for image
-        // const longText = "As your Daily Reflection Companion, here's what I offer to you: Deep, Meaningful Conversations; Listening and Questioning; A Safe Space for Sharing; Guidance for Understanding and Growth; Positive Reflections; Personalized Conversations; A Positive and Supportive Environment. My goal is to make our conversations a rewarding experience for you, where you feel supported in exploring and understanding your day's events and emotions, leading to insightful reflections and a deeper understanding of yourself.";
-        const personalityTraits = [
-            { label: 'Empathy', value: 90 },
-            { label: 'Guidance', value: 50 },
-            { label: 'Personalized Engagement', value: 92 },
-            { label: 'Supportiveness', value: 90 }
-        ];
-
-        super(name, subtitle, imageUri, longText, personalityTraits);
+        super(name, subtitle, imageUri, longText);
     }
 }
+
+export function generateAvatarObjects(imageNames: string[]): AIAvatarModel[] {
+    return imageNames.map(imageName => {
+      const name = imageName.replace('avatar-', '').split('.')[0];
+      const subtitle = 'Generic AI Companion';
+      const imageUri = `assets/images/innova-avatars/${imageName}`;
+      const longText = `Hi, I'm ${name}, your AI companion. Let's explore new ideas and insights together!`;
+  
+      return new AIAvatarModel(name, subtitle, imageUri, longText);
+    });
+}
+
+export const GenericAvatarImages = [
+    'Innova_M_001.jpg',
+    'Innova_M_004.jpg',
+    'Innova_F_003.jpg',
+    'Innova_F_002.jpg',
+    'Innova_M_002.jpg',
+    'Innova_F_004.jpg',
+    'Innova_F_005.jpg',
+    'Innova_M_003.jpg',
+    'Innova_F_006.jpg',
+]

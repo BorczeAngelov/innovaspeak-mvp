@@ -43,11 +43,14 @@
         <mat-selection-list style="padding: 0; margin: 0;">
             <mat-list-item *ngFor="let avatar of avatars; trackBy: selectAvatar">
                 <mat-card>
+
                     <mat-card-header class="example-card-header">
-                        <img mat-card-avatar src="assets/images/avatar-grace.jpg" alt="Avatar">
+                        <img mat-card-avatar [src]="avatar.imageUri" alt="Avatar">
                         <mat-card-title>{{avatar.name}}</mat-card-title>
-                        <mat-card-subtitle>{{avatar.description}}</mat-card-subtitle>
+                        <mat-card-subtitle>{{avatar.longText}}</mat-card-subtitle>
                     </mat-card-header>
+
+
                 </mat-card>
             </mat-list-item>
         </mat-selection-list>
