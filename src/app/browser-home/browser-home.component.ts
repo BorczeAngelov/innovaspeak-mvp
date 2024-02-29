@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VoiceChatInterfaceComponent } from '../voice-chat-interface/voice-chat-interface.component';
 import { SharedImportedMatModule } from '../shared-imported-mat.module';
-import { AIAvatarModel, generateAvatarObjects, GenericAvatarImages, GraceModel } from '../models/AIAvatar.model';
+import { AIAvatarModel, generateAvatarObjects, GraceModel } from '../models/AIAvatar.model';
 
 @Component({
   selector: 'app-browser-home',
@@ -20,7 +20,7 @@ export class BrowserHomeComponent implements OnInit {
 
   ngOnInit(): void {
     var grace = new GraceModel();
-    this.avatars = [grace,...generateAvatarObjects(GenericAvatarImages)];
+    this.avatars = [grace, ...generateAvatarObjects()];
     this.selectAvatar(grace);
   }
 
